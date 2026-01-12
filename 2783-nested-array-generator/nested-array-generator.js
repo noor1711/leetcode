@@ -1,23 +1,14 @@
 /**
- * @param {Array} arr
+ * @param {Array} curr
  * @return {Generator}
  */
-var inorderTraversal = function*(arr) {
-    let inOrder = [];
-
-    function recurse(curr) {
-        if (typeof curr === 'number') {
-            inOrder.push(curr)
-        } 
-
-        if (Array.isArray(curr)) {
-            curr.forEach((ele) => recurse(ele))
+var inorderTraversal = function*(curr) {
+    for (let element of curr) {
+        if (Array.isArray(element)) {
+            yield* inorderTraversal(element)
+        } else {
+            yield Number(element);
         }
-    }
-
-    recurse(arr);
-    for(let a in inOrder) {
-        yield Number(inOrder[a]);
     }
 };
 
