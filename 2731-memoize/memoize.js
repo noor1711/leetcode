@@ -11,7 +11,7 @@ function memoize(fn) {
     return function(...args) {
         const key = JSON.stringify(args)
         if (!this.cache.get(fn).has(key)) {
-            this.cache.get(fn).set(key, fn(...args))
+            this.cache.get(fn).set(key, fn.apply(this, args))
             
         }
         return this.cache.get(fn).get(key);
