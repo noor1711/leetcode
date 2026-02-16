@@ -43,28 +43,24 @@
 
 class Solution:
     def depthSumInverse(self, nestedList: List[NestedInteger]) -> int:
-        maxDepth = 0
 
         def calculateMaxDepth(nestedList, depth):
-            nonlocal maxDepth
-            maxDepth = max(maxDepth, depth)
+            ans = depth
             for nestedInt in nestedList:
                 if nestedInt.isInteger():
                     continue
                 else:
-                    calculateMaxDepth(nestedInt.getList(), depth + 1) 
-            return 
+                    ans = max(calculateMaxDepth(nestedInt.getList(), depth + 1), ans)
+            return ans
 
-        def recurse(nestedList, depth):
+        def recurse(nestedList, depth, maxDepth):
             intSum = 0
-            nonlocal maxDepth
             ans = 0
             for nestedInt in nestedList:
                 if nestedInt.isInteger():
                     intSum += nestedInt.getInteger()
                 else:
-                    ans += recurse(nestedInt.getList(), depth + 1) 
+                    ans += recurse(nestedInt.getList(), depth + 1, maxDepth) 
             return intSum * (maxDepth - depth + 1) + ans
-
-        calculateMaxDepth(nestedList, 1)
-        return recurse(nestedList, 1)
+        
+        return recurse(nestedList, 1, calculateMaxDepth(nestedList, 1))
