@@ -9,11 +9,9 @@ class Solution:
 
         def getQuadratic(x):
             return a * pow(x, 2) + b * x + c
-
         mappedArr = list(map(getQuadratic, nums))
 
-        # now we need to just merge the two lists 
-
+        # now we need to just merge the two tails of the parabola
         ans = []
         while start <= end:
             qStart = mappedArr[start]
